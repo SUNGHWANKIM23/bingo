@@ -2,12 +2,14 @@ package com.nhnacademy.bingo;
 
 import java.util.Scanner;
 
-public class BingoBoard {
+public class BingoBoard extends Thread {
     // 빙고판 초기화
     static int[][] bingo;
     static int size;
-    private static String onePlayer = "O";
-    private static String twoPlayer = "X";
+    private static String onePlayerId;
+    private static String twoPlayerId; // 여기가 비어 있어서 null이 나오는거임. 플레이어 이름 추가하라고 일부러 만들어놓은 2줄.
+    static int onePlayerCount = 0;
+    static int twoPlayerCount = 0;
 
     static Scanner scanner = new Scanner(System.in);
 
@@ -48,115 +50,119 @@ public class BingoBoard {
         }
     }
 
+    //
     public static void pickNumber() {
         for (int a = 1; a <= (size * size); a++) {
             int num = scanner.nextInt();
+            // System.in을 inputStreamReader(Socket.in);으로
 
             for (int i = 0; i < size; i++) {
-                for (int j = 0; j < 5; j++) {
+                for (int j = 0; j < size; j++) {
                     if (bingo[i][j] == num)
-                        bingo[i][j] = 0;
+                        bingo[i][j] = 0; // Player1 = "O" , Player2 = "X"
 
                     System.out.print(bingo[i][j] + " ");
                 }
                 System.out.println();
             }
 
-            winPlayer();
+            winCheck();
+
+            if ((onePlayerCount >= 1) && (twoPlayerCount >= 1)) {
+                System.out.println("draw");
+            } else if (onePlayerCount >= 1) {// 여기 숫자 바꾸면 빙고 1줄부터 12줄까지 가능하니까 입맛대로 고르면 됨.
+                System.out.println(onePlayerId + " is winner");
+            } else if (twoPlayerCount >= 1) // 여기도 이하동일
+                System.out.println(twoPlayerId + " is winner");
         }
     }
 
-    public static void winPlayer() {
+    public static void winCheck() {
         rowBingoCheck();
         columnBingoCheck();
         leftDiagonal();
         rightDiagonal();
+
     }
 
-    public static String rowBingoCheck() {
+    public static void rowBingoCheck() { // 행
         for (int i = 0; i < size; i++) {
             int oneCount = 0;
             int twoCount = 0;
             for (int j = 0; j < size; j++) {
                 if (bingo[i][j] == 0) {
                     oneCount++;
-                    if (oneCount == 5) {
-                        return onePlayer;
+                    if (oneCount == size) { // 한 줄에 사이즈가 5개니까.카운트를 사이즈로 바꾸면 되지
+                        onePlayerCount++;
                     }
                 }
                 if (bingo[i][j] == 1) {
                     twoCount++;
-                    if (twoCount == 5) {
-                        return twoPlayer;
+                    if (twoCount == size) {
+                        twoPlayerCount++;
                     }
                 }
             }
         }
-        return null;
     }
 
-    public static String columnBingoCheck() {
+    public static void columnBingoCheck() { // 열
         for (int i = 0; i < size; i++) {
             int oneCount = 0;
             int twoCount = 0;
             for (int j = 0; j < size; j++) {
                 if (bingo[j][i] == 0) {
                     oneCount++;
-                    if (oneCount == 5) {
-                        return onePlayer;
+                    if (oneCount == size) {
+                        onePlayerCount++;
                     }
                 }
                 if (bingo[j][i] == 1) {
                     twoCount++;
-                    if (twoCount == 5) {
-                        return twoPlayer;
+                    if (twoCount == size) {
+                        twoPlayerCount++;
                     }
                 }
             }
         }
-        return null;
-
     }
 
-    public static String leftDiagonal() {
+    public static void leftDiagonal() { // 좌 -> 우 대각선
         int oneCount = 0;
         int twoCount = 0;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < size; i++) {
             if (bingo[i][i] == 0) {
                 oneCount++;
-                if (oneCount == 5) {
-                    return onePlayer;
+                if (oneCount == size) {
+                    onePlayerCount++;
                 }
             }
             if (bingo[i][i] == 1) {
                 twoCount++;
-                if (twoCount == 5) {
-                    return twoPlayer;
+                if (twoCount == size) {
+                    twoPlayerCount++;
                 }
             }
         }
-        return null;
     }
 
-    public static String rightDiagonal() {
+    public static void rightDiagonal() { // 우 -> 좌 대각선
         int oneCount = 0;
         int twoCount = 0;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < size; i++) {
             if (bingo[i][4 - i] == 0) {
                 oneCount++;
-                if (oneCount == 5) {
-                    return onePlayer;
+                if (oneCount == size) {
+                    onePlayerCount++;
                 }
             }
             if (bingo[i][i] == 1) {
                 twoCount++;
-                if (twoCount == 5) {
-                    return twoPlayer;
+                if (twoCount == size) {
+                    twoPlayerCount++;
                 }
             }
         }
-
-        return null;
     }
 
 }
