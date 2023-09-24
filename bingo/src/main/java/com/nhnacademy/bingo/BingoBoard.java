@@ -1,4 +1,4 @@
-package com.nhnacademy.Bingo;
+package com.nhnacademy.bingo;
 
 import java.util.Scanner;
 

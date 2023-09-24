@@ -1,10 +1,6 @@
+package com.nhnacademy.bingo;
 
-package main.java.com.nhnacademy.Bingo;
-
-import com.nhnacademy.Bingo.BingoBoard;
-
-package com.nhnacademy.Bingo;
-
+import com.nhnacademy.bingo.BingoBoard;
 
 public class Test {
     public static void main(String[] args) {
@@ -13,9 +9,5 @@ public class Test {
         board.printBingo();
 
         board.pickNumber();
-    }
-}
-
-        board.winPlayer();
     }
 }
