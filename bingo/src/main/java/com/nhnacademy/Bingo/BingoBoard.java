@@ -1,11 +1,17 @@
 package com.nhnacademy.Bingo;
 
+import java.util.Scanner;
+
 public class BingoBoard {
     // 빙고판 초기화
     static int[][] bingo;
     static int size;
-    private static String onePlayer = "O";
-    private static String twoPlayer = "X";
+    private static String onePlayer;
+    private static String twoPlayer;
+    static int onePlayerCount = 0;
+    static int twoPlayerCount = 0;
+
+    static Scanner scanner = new Scanner(System.in);
 
     // n*n크기의 빙고판 생성
     public BingoBoard(int size) {
@@ -44,14 +50,33 @@ public class BingoBoard {
         }
     }
 
-    public static void winPlayer() {
-        rowBingoCheck();
-        columnBingoCheck();
-        leftDiagonal();
-        rightDiagonal();
+    public static void pickNumber() {
+        for (int a = 1; a <= (size * size); a++) {
+            int num = scanner.nextInt();
+
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (bingo[i][j] == num)
+                        bingo[i][j] = 0;
+
+                    System.out.print(bingo[i][j] + " ");
+                }
+                System.out.println();
+            }
+            rowBingoCheck();
+            columnBingoCheck();
+            leftDiagonal();
+            rightDiagonal();
+
+            if (onePlayerCount >= 1) {
+                System.out.println(onePlayer + " is winner");
+            }
+            if (twoPlayerCount >= 1)
+                System.out.println(twoPlayer + " is winner");
+        }
     }
 
-    public static String rowBingoCheck() {
+    public static void rowBingoCheck() {
         for (int i = 0; i < size; i++) {
             int oneCount = 0;
             int twoCount = 0;
@@ -59,21 +84,20 @@ public class BingoBoard {
                 if (bingo[i][j] == 0) {
                     oneCount++;
                     if (oneCount == 5) {
-                        return onePlayer;
+                        onePlayerCount++;
                     }
                 }
                 if (bingo[i][j] == 1) {
                     twoCount++;
                     if (twoCount == 5) {
-                        return twoPlayer;
+                        twoPlayerCount++;
                     }
                 }
             }
         }
-        return null;
     }
 
-    public static String columnBingoCheck() {
+    public static void columnBingoCheck() {
         for (int i = 0; i < size; i++) {
             int oneCount = 0;
             int twoCount = 0;
@@ -81,58 +105,55 @@ public class BingoBoard {
                 if (bingo[j][i] == 0) {
                     oneCount++;
                     if (oneCount == 5) {
-                        return onePlayer;
+                        onePlayerCount++;
                     }
                 }
                 if (bingo[j][i] == 1) {
                     twoCount++;
                     if (twoCount == 5) {
-                        return twoPlayer;
+                        twoPlayerCount++;
                     }
                 }
             }
         }
-        return null;
     }
 
-    public static String leftDiagonal() {
+    public static void leftDiagonal() {
         int oneCount = 0;
         int twoCount = 0;
         for (int i = 0; i < 5; i++) {
             if (bingo[i][i] == 0) {
                 oneCount++;
                 if (oneCount == 5) {
-                    return onePlayer;
+                    onePlayerCount++;
                 }
             }
             if (bingo[i][i] == 1) {
                 twoCount++;
                 if (twoCount == 5) {
-                    return twoPlayer;
+                    twoPlayerCount++;
                 }
             }
         }
-        return null;
     }
 
-    public static String rightDiagonal() {
+    public static void rightDiagonal() {
         int oneCount = 0;
         int twoCount = 0;
         for (int i = 0; i < 5; i++) {
             if (bingo[i][4 - i] == 0) {
                 oneCount++;
                 if (oneCount == 5) {
-                    return onePlayer;
+                    onePlayerCount++;
                 }
             }
             if (bingo[i][i] == 1) {
                 twoCount++;
                 if (twoCount == 5) {
-                    return twoPlayer;
+                    twoPlayerCount++;
                 }
             }
         }
-        return null;
     }
 
 }
