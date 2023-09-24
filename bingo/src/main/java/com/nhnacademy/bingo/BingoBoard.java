@@ -1,10 +1,13 @@
 package com.nhnacademy.bingo;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Scanner;
 
 public class BingoBoard extends Thread {
     // 빙고판 초기화
-    static int[][] bingo;
+    int[][] bingo;
     static int size;
     private static String onePlayerId;
     private static String twoPlayerId; // 여기가 비어 있어서 null이 나오는거임. 플레이어 이름 추가하라고 일부러 만들어놓은 2줄.
@@ -25,7 +28,7 @@ public class BingoBoard extends Thread {
     }
 
     // 랜덤으로 숫자 넣기
-    public static void bingoShuffle() {
+    public void bingoShuffle() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 int x = (int) (Math.random() * size);
@@ -40,18 +43,24 @@ public class BingoBoard extends Thread {
     }
 
     // 빙고판 출력
-    public static void printBingo() {
-        System.out.println("빙고판을 출력합니다.");
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                System.out.print(bingo[i][j] + " ");
+    public void printBingo(BufferedWriter writer) {
+        try {
+            writer.write("빙고판을 출력합니다.\n");
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    writer.write(bingo[i][j] + " ");
+                }
+                writer.write("\n");
             }
-            System.out.println();
+            writer.flush();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
     //
-    public static void pickNumber() {
+    public void pickNumber() {
         for (int a = 1; a <= (size * size); a++) {
             int num = scanner.nextInt();
             // System.in을 inputStreamReader(Socket.in);으로
@@ -77,7 +86,7 @@ public class BingoBoard extends Thread {
         }
     }
 
-    public static void winCheck() {
+    public void winCheck() {
         rowBingoCheck();
         columnBingoCheck();
         leftDiagonal();
@@ -85,7 +94,7 @@ public class BingoBoard extends Thread {
 
     }
 
-    public static void rowBingoCheck() { // 행
+    public void rowBingoCheck() { // 행
         for (int i = 0; i < size; i++) {
             int oneCount = 0;
             int twoCount = 0;
@@ -106,7 +115,7 @@ public class BingoBoard extends Thread {
         }
     }
 
-    public static void columnBingoCheck() { // 열
+    public void columnBingoCheck() { // 열
         for (int i = 0; i < size; i++) {
             int oneCount = 0;
             int twoCount = 0;
@@ -127,7 +136,7 @@ public class BingoBoard extends Thread {
         }
     }
 
-    public static void leftDiagonal() { // 좌 -> 우 대각선
+    public void leftDiagonal() { // 좌 -> 우 대각선
         int oneCount = 0;
         int twoCount = 0;
         for (int i = 0; i < size; i++) {
@@ -146,7 +155,7 @@ public class BingoBoard extends Thread {
         }
     }
 
-    public static void rightDiagonal() { // 우 -> 좌 대각선
+    public void rightDiagonal() { // 우 -> 좌 대각선
         int oneCount = 0;
         int twoCount = 0;
         for (int i = 0; i < size; i++) {
