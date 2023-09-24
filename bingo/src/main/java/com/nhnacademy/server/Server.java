@@ -29,6 +29,9 @@ public class Server {
         System.out.println("게임을 시작합니다.");
         ready = true;
 
+        // 첫번째 플레이어부터 시작 (먼저 들어온 사람이 첫번째)
+        int turnOwner = 1;
+
         // TODO 빙고게임 진행 코드 추가
     }
 }
