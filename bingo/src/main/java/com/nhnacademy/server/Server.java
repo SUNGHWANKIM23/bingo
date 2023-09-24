@@ -4,11 +4,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
+    static boolean ready = false;
 
     public static void main(String[] args) {
         // 게임 준비
         int port = 1234;
-        int playerCount = 0;
+        int playerCount = 1;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("서버에 연결되었습니다.");
 
@@ -26,6 +27,7 @@ public class Server {
 
         // 게임 start
         System.out.println("게임을 시작합니다.");
+        ready = true;
 
         // TODO 빙고게임 진행 코드 추가
     }
