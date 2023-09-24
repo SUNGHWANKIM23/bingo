@@ -64,7 +64,7 @@ public class Player extends Thread {
             }
             yield();
         }
-        // 게임 시작
+        // 게임 
         sendMe("player : " + num + ", piece : " + piece);
 
         // 빙고판 만들기
@@ -74,6 +74,11 @@ public class Player extends Thread {
         // 출력
         bingoBoard.printBingo(socketOut);
         bingoBoard.printBingo(sysOut);
+        try {
+            Server.gameStart();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendMe(String message) {

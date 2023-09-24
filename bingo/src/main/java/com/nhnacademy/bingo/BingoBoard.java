@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
+import com.nhnacademy.server.Player;
+
 public class BingoBoard extends Thread {
     // 빙고판 초기화
     int[][] bingo;
