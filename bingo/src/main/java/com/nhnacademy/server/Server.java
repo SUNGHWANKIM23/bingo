@@ -16,7 +16,7 @@ public class Server {
     static BufferedReader socketIn;
     static BufferedWriter socketOut;
 
-    public static void gameStart() throws IOException {
+    public void gameStart() throws IOException {
         for (Player player : Player.playerList) {
             // player한테 묻기
             // System.out.println("몇번을 선택하시겠습니까?"); - 서버에 띄우기
@@ -32,8 +32,8 @@ public class Server {
                 socketOut.write(line + "\n");
                 socketOut.flush();
 
-                BingoBoard.pickNumber();    // 여기 안에 이겼을 경우를 이미 넣었는데..?
-                BingoBoard.printBingo();
+                bingoBoard.pickNumber();    // 여기 안에 이겼을 경우를 이미 넣었는데..?
+                bingoBoard.printBingo();
             } catch (IOException e) {
                 System.out.println(e);
                 // e.printStackTrace();
@@ -78,11 +78,6 @@ public class Server {
         }
         System.out.println("end");
         // TODO 빙고게임 진행 코드 추가
-        try {
-            gameStart();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        
     }
 }
