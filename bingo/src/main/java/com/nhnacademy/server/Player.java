@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.nhnacademy.bingo.BingoBoard;
+
 public class Player extends Thread {
     static List<Player> playerList = new LinkedList<>();
     BufferedReader sysIn; // 서버에 출력
@@ -16,6 +18,7 @@ public class Player extends Thread {
     BufferedReader socketIn; // 소켓에 출력
     BufferedWriter socketOut;
 
+    BingoBoard bingoBoard;
     Socket socket;
     int num;
     String piece;
@@ -63,6 +66,14 @@ public class Player extends Thread {
         }
         // 게임 시작
         sendMe("player : " + num + ", piece : " + piece);
+
+        // 빙고판 만들기
+        bingoBoard = new BingoBoard(5);
+        // 빙고판 초기화
+        bingoBoard.bingoShuffle();
+        // 출력
+        bingoBoard.printBingo(socketOut);
+        bingoBoard.printBingo(sysOut);
     }
 
     public void sendMe(String message) {

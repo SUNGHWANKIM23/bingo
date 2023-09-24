@@ -32,6 +32,15 @@ public class Server {
         // 첫번째 플레이어부터 시작 (먼저 들어온 사람이 첫번째)
         int turnOwner = 1;
 
+        // player가 끝나는거 기다렸다가 종료
+        try {
+            Player.playerList.get(0).join();
+            Player.playerList.get(1).join();
+        } catch (InterruptedException e) {
+            System.out.println(e.toString());
+
+        }
+        System.out.println("end");
         // TODO 빙고게임 진행 코드 추가
     }
 }
