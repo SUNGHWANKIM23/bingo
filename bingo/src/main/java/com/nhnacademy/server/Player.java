@@ -74,11 +74,7 @@ public class Player extends Thread {
         // 출력
         bingoBoard.printBingo(socketOut);
         bingoBoard.printBingo(sysOut);
-        try {
-            Server.gameStart();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
     }
 
     public void sendMe(String message) {
@@ -86,7 +82,6 @@ public class Player extends Thread {
             socketOut.write(message + "\n");
             socketOut.flush();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -98,7 +93,6 @@ public class Player extends Thread {
                 player.socketOut.flush();
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             // System.out.println("error");
         }
