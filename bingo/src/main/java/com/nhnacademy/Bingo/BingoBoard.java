@@ -2,7 +2,7 @@ package com.nhnacademy.Bingo;
 
 import java.util.Scanner;
 
-public class BingoBoard {
+public class BingoBoard extends Thread {
     // 빙고판 초기화
     static int[][] bingo;
     static int size;
@@ -63,17 +63,24 @@ public class BingoBoard {
                 }
                 System.out.println();
             }
-            rowBingoCheck();
-            columnBingoCheck();
-            leftDiagonal();
-            rightDiagonal();
 
-            if (onePlayerCount >= 1) {
+            winCheck();
+
+            if ((onePlayerCount >= 1) && (twoPlayerCount >= 1)) {
+                System.out.println("draw");
+            } else if (onePlayerCount >= 1) {
                 System.out.println(onePlayer + " is winner");
-            }
-            if (twoPlayerCount >= 1)
+            } else if (twoPlayerCount >= 1)
                 System.out.println(twoPlayer + " is winner");
         }
+    }
+
+    public static void winCheck() {
+        rowBingoCheck();
+        columnBingoCheck();
+        leftDiagonal();
+        rightDiagonal();
+
     }
 
     public static void rowBingoCheck() {
