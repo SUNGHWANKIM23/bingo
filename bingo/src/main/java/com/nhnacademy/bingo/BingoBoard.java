@@ -2,6 +2,8 @@ package com.nhnacademy.bingo;
 
 import java.util.Scanner;
 
+import com.nhnacademy.server.Player;
+
 public class BingoBoard extends Thread {
     // 빙고판 초기화
     static int[][] bingo;
