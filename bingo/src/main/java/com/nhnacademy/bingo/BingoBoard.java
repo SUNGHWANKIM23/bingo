@@ -1,4 +1,6 @@
-package com.nhnacademy.Bingo;
+package com.nhnacademy.bingo;
+
+import java.util.Scanner;
 
 public class BingoBoard {
     // 빙고판 초기화
@@ -6,6 +8,8 @@ public class BingoBoard {
     static int size;
     private static String onePlayer = "O";
     private static String twoPlayer = "X";
+
+    static Scanner scanner = new Scanner(System.in);
 
     // n*n크기의 빙고판 생성
     public BingoBoard(int size) {
@@ -41,6 +45,24 @@ public class BingoBoard {
                 System.out.print(bingo[i][j] + " ");
             }
             System.out.println();
+        }
+    }
+
+    public static void pickNumber() {
+        for (int a = 1; a <= (size * size); a++) {
+            int num = scanner.nextInt();
+
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (bingo[i][j] == num)
+                        bingo[i][j] = 0;
+
+                    System.out.print(bingo[i][j] + " ");
+                }
+                System.out.println();
+            }
+
+            winPlayer();
         }
     }
 
@@ -93,6 +115,7 @@ public class BingoBoard {
             }
         }
         return null;
+
     }
 
     public static String leftDiagonal() {
@@ -132,6 +155,7 @@ public class BingoBoard {
                 }
             }
         }
+
         return null;
     }
 
