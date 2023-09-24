@@ -16,31 +16,6 @@ public class Server {
     static BufferedReader socketIn;
     static BufferedWriter socketOut;
 
-    public void gameStart() throws IOException {
-        for (Player player : Player.playerList) {
-            // player한테 묻기
-            // System.out.println("몇번을 선택하시겠습니까?"); - 서버에 띄우기
-            socketOut.write("몇번을 선택하시겠습니까? \n");
-            socketOut.flush();
-            
-            Scanner sc = new Scanner(socketIn);
-            String line = sc.nextLine();
-
-            try {
-                // 해당 player가 입력했다면
-                // 그 값을 서버로 보냄
-                socketOut.write(line + "\n");
-                socketOut.flush();
-
-                bingoBoard.pickNumber();    // 여기 안에 이겼을 경우를 이미 넣었는데..?
-                bingoBoard.printBingo();
-            } catch (IOException e) {
-                System.out.println(e);
-                // e.printStackTrace();
-            }
-        }
-    }
-
 
     public static void main(String[] args) {
         // 게임 준비

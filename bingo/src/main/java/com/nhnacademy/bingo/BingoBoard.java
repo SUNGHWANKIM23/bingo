@@ -2,6 +2,7 @@ package com.nhnacademy.bingo;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -15,8 +16,6 @@ public class BingoBoard extends Thread {
     private static String twoPlayerId; // 여기가 비어 있어서 null이 나오는거임. 플레이어 이름 추가하라고 일부러 만들어놓은 2줄.
     static int onePlayerCount = 0;
     static int twoPlayerCount = 0;
-
-    static Scanner scanner = new Scanner(System.in);
 
     // n*n크기의 빙고판 생성
     public BingoBoard(int size) {
@@ -45,12 +44,17 @@ public class BingoBoard extends Thread {
     }
 
     // 빙고판 출력
-    public void printBingo(BufferedWriter writer) {
+    public void printBingo(BufferedWriter writer, String piece) {
         try {
             writer.write("빙고판을 출력합니다.\n");
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
-                    writer.write(bingo[i][j] + " ");
+                    if(bingo[i][j] == 0) {
+                        writer.write(piece);
+                    }
+                    else{
+                        writer.write(bingo[i][j] + " ");
+                    }
                 }
                 writer.write("\n");
             }
@@ -62,11 +66,12 @@ public class BingoBoard extends Thread {
     }
 
     //
-    public void pickNumber() {
+    public void pickNumber(Scanner scanner) {
         for (int a = 1; a <= (size * size); a++) {
-            int num = scanner.nextInt();
+
             // System.in을 inputStreamReader(Socket.in);으로
 
+            int num = scanner.nextInt();
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     if (bingo[i][j] == num)

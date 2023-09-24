@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import com.nhnacademy.bingo.BingoBoard;
 
@@ -72,9 +73,31 @@ public class Player extends Thread {
         // 빙고판 초기화
         bingoBoard.bingoShuffle();
         // 출력
-        bingoBoard.printBingo(socketOut);
-        bingoBoard.printBingo(sysOut);
+        bingoBoard.printBingo(socketOut, piece);
+        bingoBoard.printBingo(sysOut, piece);
         
+    }
+
+    public void gameStart() throws IOException {
+        for (Player player : Player.playerList) {
+            // player한테 묻기
+            System.out.println("몇번을 선택하시겠습니까?");
+
+            try {
+                // 해당 player가 입력했다면
+                // 그 값을 서버로 보냄
+                // socketOut.write(line + "\n");
+                // socketOut.flush();
+                Scanner scanner = new Scanner(new InputStreamReader(socket.getInputStream()));
+
+
+                bingoBoard.pickNumber(scanner);    // 여기 안에 이겼을 경우를 이미 넣었는데..?
+                bingoBoard.printBingo(sysOut, piece);
+            } catch (Exception e) {
+                System.out.println(e);
+                // e.printStackTrace();
+            }
+        }
     }
 
     public void sendMe(String message) {
