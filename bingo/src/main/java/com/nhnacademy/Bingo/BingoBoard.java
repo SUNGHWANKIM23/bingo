@@ -1,6 +1,5 @@
 package com.nhnacademy.Bingo;
 
-
 import java.util.Scanner;
 
 public class BingoBoard {
@@ -11,7 +10,6 @@ public class BingoBoard {
     private static String twoPlayer = "X";
 
     static Scanner scanner = new Scanner(System.in);
-
 
     // n*n크기의 빙고판 생성
     public BingoBoard(int size) {
@@ -50,7 +48,6 @@ public class BingoBoard {
         }
     }
 
-
     public static void pickNumber() {
         for (int a = 1; a <= (size * size); a++) {
             int num = scanner.nextInt();
@@ -68,7 +65,6 @@ public class BingoBoard {
             winPlayer();
         }
     }
-
 
     public static void winPlayer() {
         rowBingoCheck();
@@ -120,28 +116,6 @@ public class BingoBoard {
         }
         return null;
 
-
-    public static String leftDiagonal() {
-        int oneCount = 0;
-        int twoCount = 0;
-        for (int i = 0; i < 5; i++) {
-            if (bingo[i][i] == 0) {
-                oneCount++;
-                if (oneCount == 5) {
-                    return onePlayer;
-                }
-            }
-            if (bingo[i][i] == 1) {
-                twoCount++;
-                if (twoCount == 5) {
-                    return twoPlayer;
-                }
-            }
-        }
-        return null;
-    }
-
-
     }
 
     public static String leftDiagonal() {
@@ -181,6 +155,7 @@ public class BingoBoard {
                 }
             }
         }
+
         return null;
     }
 
