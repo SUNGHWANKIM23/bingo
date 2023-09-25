@@ -41,7 +41,6 @@ public class BingoBoard {
     //직접 입력해서 숫자 넣기
     public static void selectBingoNum(Socket socket) throws IOException{
         
-        int maxNum = size*size;
         Scanner scanner = new Scanner(new InputStreamReader(socket.getInputStream()));
         boolean isDuplicate = false;
         //socket.getInputStrean or System.in
