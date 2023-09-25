@@ -75,7 +75,13 @@ public class Player extends Thread {
         // 빙고판 만들기
         bingoBoard = new BingoBoard(5);
         // 빙고판 초기화
-        bingoBoard.bingoShuffle();
+        // bingoBoard.bingoShuffle();
+        try {
+            bingoBoard.selectBingoNum(socketOut, socket);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         // 출력
         bingoBoard.printBingo(socketOut, piece);
         bingoBoard.printBingo(sysOut, piece);
