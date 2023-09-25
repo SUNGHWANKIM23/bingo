@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import com.nhnacademy.bingo.BingoBoard;
 
@@ -22,6 +23,10 @@ public class Player extends Thread {
     Socket socket;
     int num;
     String piece;
+    // 빙고 사이즈
+    int size = 5;
+
+    static String beforePlayer="Thread-1";
 
     public Player(Socket socket, int num) {
         this.socket = socket;
@@ -34,7 +39,7 @@ public class Player extends Thread {
     // 플레이어 문양 선택
     public void pickPiece() {
         if (num == 1) {
-            piece = "O";
+            piece = "=";
         } else {
             piece = "X";
         }
@@ -72,13 +77,51 @@ public class Player extends Thread {
         // 빙고판 초기화
         bingoBoard.bingoShuffle();
         // 출력
-        bingoBoard.printBingo(socketOut);
-        bingoBoard.printBingo(sysOut);
+        bingoBoard.printBingo(socketOut, piece);
+        bingoBoard.printBingo(sysOut, piece);
+        
+        
+    }
+
+    public void gameStart() throws IOException {
+        // socketOut - player 출력
+        // sysOut - 서버 출력
         try {
-            Server.gameStart();
-        } catch (IOException e) {
-            e.printStackTrace();
+            // player한테 묻기
+            socketOut.write("몇 번을 선택하겠습니까?");
+            socketOut.newLine();
+            socketOut.flush();
+            System.out.println("플레이어" + num);
+            // scanner 받을 때까지 기다리기
+            Scanner scanner = new Scanner(socketIn);
+            String pickNum = scanner.nextLine();
+            while(pickNum != null) {
+
+                
+                /* if(scanner == null) {
+                    Thread.currentThread().wait();
+                } else{
+                    Thread.currentThread().notifyAll();
+                } */
+                //-----------------------------------
+                // 해당 player가 입력했다면
+                // 그 값을 서버로 보냄
+                bingoBoard.pickNumber(pickNum);
+                bingoBoard.printBingo(socketOut, piece);    // 여기 ㄴㄴ
+                
+                // 서버에 띄우기
+                /* sysOut.write(Thread.currentThread().getName() +  num + pickNum); // 여기 안나옴
+                sysOut.newLine();
+                sysOut.flush(); */
+                bingoBoard.printBingo(sysOut, piece);    // 여기 ㅇㅋ
+                System.out.println("입력완료 - " + "플레이어" + num);
+                break;
+            }
+            } catch (Exception e) {
+            System.out.println(e);
+            // e.printStackTrace();
         }
+
     }
 
     public void sendMe(String message) {
@@ -86,7 +129,6 @@ public class Player extends Thread {
             socketOut.write(message + "\n");
             socketOut.flush();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -98,7 +140,6 @@ public class Player extends Thread {
                 player.socketOut.flush();
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             // System.out.println("error");
         }
@@ -113,4 +154,5 @@ public class Player extends Thread {
             e.printStackTrace();
         }
     }
+    
 }

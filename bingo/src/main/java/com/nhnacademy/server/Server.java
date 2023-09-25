@@ -16,36 +16,12 @@ public class Server {
     static BufferedReader socketIn;
     static BufferedWriter socketOut;
 
-    public static void gameStart() throws IOException {
-        for (Player player : Player.playerList) {
-            // player한테 묻기
-            // System.out.println("몇번을 선택하시겠습니까?"); - 서버에 띄우기
-            socketOut.write("몇번을 선택하시겠습니까? \n");
-            socketOut.flush();
-            
-            Scanner sc = new Scanner(socketIn);
-            String line = sc.nextLine();
-
-            try {
-                // 해당 player가 입력했다면
-                // 그 값을 서버로 보냄
-                socketOut.write(line + "\n");
-                socketOut.flush();
-
-                BingoBoard.pickNumber();    // 여기 안에 이겼을 경우를 이미 넣었는데..?
-                BingoBoard.printBingo();
-            } catch (IOException e) {
-                System.out.println(e);
-                // e.printStackTrace();
-            }
-        }
-    }
-
 
     public static void main(String[] args) {
         // 게임 준비
         int port = 1234;
         int playerCount = 1;
+        int count = 0;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("서버에 연결되었습니다.");
 
@@ -76,13 +52,27 @@ public class Server {
             System.out.println(e.toString());
 
         }
+        while (ready) {
+            try {
+                if(turnOwner == 1) {
+                    Player.playerList.get(0).gameStart();
+                    turnOwner = 2;
+                } else {
+                    Player.playerList.get(1).gameStart();
+                    turnOwner = 1;
+                }
+                count++;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            if(count > 25){
+                ready =false;
+            }
+        }
+
+
         System.out.println("end");
         // TODO 빙고게임 진행 코드 추가
-        try {
-            gameStart();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        
     }
 }
