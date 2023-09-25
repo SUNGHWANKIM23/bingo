@@ -21,6 +21,7 @@ public class Server {
         // 게임 준비
         int port = 1234;
         int playerCount = 1;
+        int count = 0;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("서버에 연결되었습니다.");
 
@@ -51,6 +52,25 @@ public class Server {
             System.out.println(e.toString());
 
         }
+        while (ready) {
+            try {
+                if(turnOwner == 1) {
+                    Player.playerList.get(0).gameStart();
+                    turnOwner = 2;
+                } else {
+                    Player.playerList.get(1).gameStart();
+                    turnOwner = 1;
+                }
+                count++;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            if(count > 25){
+                ready =false;
+            }
+        }
+
+
         System.out.println("end");
         // TODO 빙고게임 진행 코드 추가
         

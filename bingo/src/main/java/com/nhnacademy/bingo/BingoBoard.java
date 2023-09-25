@@ -50,7 +50,7 @@ public class BingoBoard extends Thread {
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     if(bingo[i][j] == 0) {
-                        writer.write(piece);
+                        writer.write(piece+" ");
                     }
                     else{
                         writer.write(bingo[i][j] + " ");
@@ -66,12 +66,12 @@ public class BingoBoard extends Thread {
     }
 
     //
-    public void pickNumber(Scanner scanner) {
+    public void pickNumber(String picknum) {
         for (int a = 1; a <= (size * size); a++) {
 
             // System.in을 inputStreamReader(Socket.in);으로
 
-            int num = scanner.nextInt();
+            int num = Integer.valueOf(picknum);
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     if (bingo[i][j] == num)
