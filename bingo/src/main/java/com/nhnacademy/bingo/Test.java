@@ -8,6 +8,6 @@ public class Test {
         board.bingoShuffle();
         // board.printBingo();
 
-        board.pickNumber();
+        // board.pickNumber();
     }
 }
