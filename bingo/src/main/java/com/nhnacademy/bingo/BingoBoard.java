@@ -77,9 +77,9 @@ public class BingoBoard extends Thread {
                     if (bingo[i][j] == num)
                         bingo[i][j] = 0; // Player1 = "O" , Player2 = "X"
 
-                    System.out.print(bingo[i][j] + " ");
+                    // System.out.print(bingo[i][j] + " ");
                 }
-                System.out.println();
+                // System.out.println();
             }
 
             winCheck();

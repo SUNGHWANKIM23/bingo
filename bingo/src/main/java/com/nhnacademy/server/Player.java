@@ -107,7 +107,7 @@ public class Player extends Thread {
                 // 해당 player가 입력했다면
                 // 그 값을 서버로 보냄
                 bingoBoard.pickNumber(pickNum);
-                bingoBoard.printBingo(socketOut, piece);    // 여기 ㄴㄴ
+                bingoBoard.printBingo(socketOut, piece);    // 
                 
                 // 서버에 띄우기
                 /* sysOut.write(Thread.currentThread().getName() +  num + pickNum); // 여기 안나옴
