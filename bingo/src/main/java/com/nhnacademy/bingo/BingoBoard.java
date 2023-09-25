@@ -70,16 +70,11 @@ public class BingoBoard extends Thread {
         for (int a = 1; a <= (size * size); a++) {
 
             // System.in을 inputStreamReader(Socket.in);으로
-
-            int num = Integer.valueOf(picknum);
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
-                    if (bingo[i][j] == num)
+                    if (bingo[i][j] == Integer.valueOf(picknum))
                         bingo[i][j] = 0; // Player1 = "O" , Player2 = "X"
-
-                    // System.out.print(bingo[i][j] + " ");
                 }
-                // System.out.println();
             }
 
             winCheck();
