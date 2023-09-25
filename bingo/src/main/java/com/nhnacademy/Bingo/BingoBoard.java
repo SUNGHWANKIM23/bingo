@@ -50,12 +50,12 @@ public class BingoBoard {
                 
                 while(!isDuplicate){
                     System.out.println("빙고판 안에 넣을 숫자를 입력하세요.");  
-                    int selecNum = scanner.nextInt();
+                    int selectNum = scanner.nextInt();
                     
                     //중복된 숫자인지 확인
                     for(int k = 0; k < i; k++){
                         for(int l = 0; l < j; l++){
-                            if(bingo[k][j] == selecNum){
+                            if(bingo[k][j] == selectNum){
                                 isDuplicate = true;
                                 System.out.println("중복된 숫자입니다. 다른 숫자를 입력하세요.");
                                 break;
